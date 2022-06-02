@@ -1,0 +1,7 @@
+{{!-- <div class={{concat "project-" @type}}> --}}
+<div class="project">
+  <Project::Image
+    @src={{concat "https://cdn.october.eu/" @project.illustration.url}}
+  />
+  <Project::Details @project={{@project}} />
+</div>

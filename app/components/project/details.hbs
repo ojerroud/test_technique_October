@@ -1,0 +1,34 @@
+<div class="project-details">
+  <img
+    class="project-flag"
+    src={{concat
+      "/assets/flags/icon-flag-"
+      @project.business.address.country
+      ".svg"
+    }}
+  />
+  <div class="project-details-component">
+    <div class="project-details-component-summary">
+      <h1 class="project-name fs-6 fw-bold">{{@project.name}}</h1>
+      {{#each
+        (get @project.summary @project.business.address.country)
+        as |item|
+      }}
+        <p class="project-summary">
+          {{item.value}}
+        </p>
+      {{/each}}
+    </div>
+    <div class="project-details-component-rate">
+      <div class="fs-4">{{@project.rate}}%</div>
+      <div class="fs-6">{{@project.loanDuration}}
+        months · €
+        {{@project.amount}}</div>
+      <div class={{concat "circle " @project.grade}}> {{@project.grade}}</div>
+    </div>
+    <div class="project-details-component-finance">
+      <div>{{this.projectDetails}}</div>
+      {{!-- <div>{{@project.openingDate}}</div> --}}
+    </div>
+  </div>
+</div>

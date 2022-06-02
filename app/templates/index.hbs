@@ -1,0 +1,15 @@
+<GeneralContainer>
+  <div class="projects-online">
+    <h3>{{this.projectsOnline.length}} projects online</h3>
+    {{#each this.projectsOnline as |project|}}
+      <Project @project={{project}} @type="online" />
+    {{/each}}
+  </div>
+  <div class="projects-financed">
+    <h3>Financed projects</h3>
+    {{#each this.projectsCompleted as |project|}}
+      <Project @project={{project}} @type="financed" />
+    {{/each}}
+  </div>
+
+</GeneralContainer>
