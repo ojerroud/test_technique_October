@@ -1,7 +1,8 @@
 {{!-- <div class={{concat "project-" @type}}> --}}
-<div class="project">
+<div class={{concat "project-" (if @isOnline "online" "financed")}}>
+  {{!-- <p>{{@openingDateTime}}</p> --}}
   <Project::Image
     @src={{concat "https://cdn.october.eu/" @project.illustration.url}}
   />
-  <Project::Details @project={{@project}} />
+  <Project::Details @project={{@project}} @isOnline={{@isOnline}} />
 </div>

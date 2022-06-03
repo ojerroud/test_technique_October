@@ -115,16 +115,17 @@
   const __COLOCATED_TEMPLATE__ = Ember.HTMLBars.template(
   /*
     {{!-- <div class={{concat "project-" @type}}> --}}
-  <div class="project">
+  <div class={{concat "project-" (if @isOnline "online" "financed")}}>
+    {{!-- <p>{{@openingDateTime}}</p> --}}
     <Project::Image
       @src={{concat "https://cdn.october.eu/" @project.illustration.url}}
     />
-    <Project::Details @project={{@project}} />
+    <Project::Details @project={{@project}} @isOnline={{@isOnline}} />
   </div>
   */
   {
-    "id": "VJAEqL3d",
-    "block": "{\"symbols\":[\"@project\"],\"statements\":[[10,\"div\"],[14,0,\"project\"],[12],[2,\"\\n  \"],[8,\"project/image\",[],[[\"@src\"],[[30,[36,0],[\"https://cdn.october.eu/\",[32,1,[\"illustration\",\"url\"]]],null]]],null],[2,\"\\n  \"],[8,\"project/details\",[],[[\"@project\"],[[32,1]]],null],[2,\"\\n\"],[13]],\"hasEval\":false,\"upvars\":[\"concat\"]}",
+    "id": "iAOGLS+A",
+    "block": "{\"symbols\":[\"@isOnline\",\"@project\"],\"statements\":[[10,\"div\"],[15,0,[30,[36,1],[\"project-\",[30,[36,0],[[32,1],\"online\",\"financed\"],null]],null]],[12],[2,\"\\n\"],[2,\"  \"],[8,\"project/image\",[],[[\"@src\"],[[30,[36,1],[\"https://cdn.october.eu/\",[32,2,[\"illustration\",\"url\"]]],null]]],null],[2,\"\\n  \"],[8,\"project/details\",[],[[\"@project\",\"@isOnline\"],[[32,2],[32,1]]],null],[2,\"\\n\"],[13]],\"hasEval\":false,\"upvars\":[\"if\",\"concat\"]}",
     "meta": {
       "moduleName": "emberjs-tutorial/components/project.hbs"
     }
@@ -166,32 +167,60 @@
     <div class="project-details-component">
       <div class="project-details-component-summary">
         <h1 class="project-name fs-6 fw-bold">{{@project.name}}</h1>
-        {{#each
-          (get @project.summary @project.business.address.country)
-          as |item|
-        }}
-          <p class="project-summary">
-            {{item.value}}
-          </p>
-        {{/each}}
+        {{#if @isOnline}}
+  
+          {{#each
+            (get @project.summary @project.business.address.country)
+            as |item|
+          }}
+            <p class="project-summary text-secondary">
+              {{item.value}}
+            </p>
+          {{/each}}
+        {{else}}
+          <div class="project-summary text-secondary">{{@project.rate}}% ·
+            {{@project.loanDuration}}
+            months</div>
+        {{/if}}
       </div>
       <div class="project-details-component-rate">
-        <div class="fs-4">{{@project.rate}}%</div>
-        <div class="fs-6">{{@project.loanDuration}}
-          months · €
-          {{@project.amount}}</div>
-        <div class={{concat "circle " @project.grade}}> {{@project.grade}}</div>
+        {{#if @isOnline}}
+          <div class="fs-4 text-secondary">{{@project.rate}}%</div>
+          <div class="fs-6 text-secondary">{{@project.loanDuration}}
+            months · €
+            {{formatamount @project.amount}}</div>
+          <div class={{concat "circle text-secondary " @project.grade}}>
+            {{@project.grade}}</div>
+        {{else}}
+          <div class="fs-6 text-secondary">€
+            {{formatamount @project.amount}}</div>
+        {{/if}}
+  
       </div>
       <div class="project-details-component-finance">
-        <div>{{this.projectDetails}}</div>
-        {{!-- <div>{{@project.openingDate}}</div> --}}
+        {{#if @isOnline}}
+          <div class="toFinance fw-bold text-primary">{{tofinance
+              @project.amount
+              @project.totalInvested
+            }}
+          </div>
+          <div class="duration text-secondary">{{duration
+              @project.expirationDate
+            }}</div>
+        {{else}}
+          <div class="duration text-secondary">{{duration
+              @project.expirationDate
+            }}</div>
+          <div class={{concat "circle text-secondary " @project.grade}}>
+            {{@project.grade}}</div>
+        {{/if}}
       </div>
     </div>
   </div>
   */
   {
-    "id": "g63QPPxO",
-    "block": "{\"symbols\":[\"item\",\"@project\"],\"statements\":[[10,\"div\"],[14,0,\"project-details\"],[12],[2,\"\\n  \"],[10,\"img\"],[14,0,\"project-flag\"],[15,\"src\",[30,[36,0],[\"/assets/flags/icon-flag-\",[32,2,[\"business\",\"address\",\"country\"]],\".svg\"],null]],[12],[13],[2,\"\\n  \"],[10,\"div\"],[14,0,\"project-details-component\"],[12],[2,\"\\n    \"],[10,\"div\"],[14,0,\"project-details-component-summary\"],[12],[2,\"\\n      \"],[10,\"h1\"],[14,0,\"project-name fs-6 fw-bold\"],[12],[1,[32,2,[\"name\"]]],[13],[2,\"\\n\"],[6,[37,3],[[30,[36,2],[[30,[36,2],[[30,[36,1],[[32,2,[\"summary\"]],[32,2,[\"business\",\"address\",\"country\"]]],null]],null]],null]],null,[[\"default\"],[{\"statements\":[[2,\"        \"],[10,\"p\"],[14,0,\"project-summary\"],[12],[2,\"\\n          \"],[1,[32,1,[\"value\"]]],[2,\"\\n        \"],[13],[2,\"\\n\"]],\"parameters\":[1]}]]],[2,\"    \"],[13],[2,\"\\n    \"],[10,\"div\"],[14,0,\"project-details-component-rate\"],[12],[2,\"\\n      \"],[10,\"div\"],[14,0,\"fs-4\"],[12],[1,[32,2,[\"rate\"]]],[2,\"%\"],[13],[2,\"\\n      \"],[10,\"div\"],[14,0,\"fs-6\"],[12],[1,[32,2,[\"loanDuration\"]]],[2,\"\\n        months · €\\n        \"],[1,[32,2,[\"amount\"]]],[13],[2,\"\\n      \"],[10,\"div\"],[15,0,[30,[36,0],[\"circle \",[32,2,[\"grade\"]]],null]],[12],[2,\" \"],[1,[32,2,[\"grade\"]]],[13],[2,\"\\n    \"],[13],[2,\"\\n    \"],[10,\"div\"],[14,0,\"project-details-component-finance\"],[12],[2,\"\\n      \"],[10,\"div\"],[12],[1,[32,0,[\"projectDetails\"]]],[13],[2,\"\\n\"],[2,\"    \"],[13],[2,\"\\n  \"],[13],[2,\"\\n\"],[13]],\"hasEval\":false,\"upvars\":[\"concat\",\"get\",\"-track-array\",\"each\"]}",
+    "id": "UI32x8yN",
+    "block": "{\"symbols\":[\"item\",\"@project\",\"@isOnline\"],\"statements\":[[10,\"div\"],[14,0,\"project-details\"],[12],[2,\"\\n  \"],[10,\"img\"],[14,0,\"project-flag\"],[15,\"src\",[30,[36,1],[\"/assets/flags/icon-flag-\",[32,2,[\"business\",\"address\",\"country\"]],\".svg\"],null]],[12],[13],[2,\"\\n  \"],[10,\"div\"],[14,0,\"project-details-component\"],[12],[2,\"\\n    \"],[10,\"div\"],[14,0,\"project-details-component-summary\"],[12],[2,\"\\n      \"],[10,\"h1\"],[14,0,\"project-name fs-6 fw-bold\"],[12],[1,[32,2,[\"name\"]]],[13],[2,\"\\n\"],[6,[37,7],[[32,3]],null,[[\"default\",\"else\"],[{\"statements\":[[2,\"\\n\"],[6,[37,6],[[30,[36,5],[[30,[36,5],[[30,[36,4],[[32,2,[\"summary\"]],[32,2,[\"business\",\"address\",\"country\"]]],null]],null]],null]],null,[[\"default\"],[{\"statements\":[[2,\"          \"],[10,\"p\"],[14,0,\"project-summary text-secondary\"],[12],[2,\"\\n            \"],[1,[32,1,[\"value\"]]],[2,\"\\n          \"],[13],[2,\"\\n\"]],\"parameters\":[1]}]]]],\"parameters\":[]},{\"statements\":[[2,\"        \"],[10,\"div\"],[14,0,\"project-summary text-secondary\"],[12],[1,[32,2,[\"rate\"]]],[2,\"% ·\\n          \"],[1,[32,2,[\"loanDuration\"]]],[2,\"\\n          months\"],[13],[2,\"\\n\"]],\"parameters\":[]}]]],[2,\"    \"],[13],[2,\"\\n    \"],[10,\"div\"],[14,0,\"project-details-component-rate\"],[12],[2,\"\\n\"],[6,[37,7],[[32,3]],null,[[\"default\",\"else\"],[{\"statements\":[[2,\"        \"],[10,\"div\"],[14,0,\"fs-4 text-secondary\"],[12],[1,[32,2,[\"rate\"]]],[2,\"%\"],[13],[2,\"\\n        \"],[10,\"div\"],[14,0,\"fs-6 text-secondary\"],[12],[1,[32,2,[\"loanDuration\"]]],[2,\"\\n          months · €\\n          \"],[1,[30,[36,3],[[32,2,[\"amount\"]]],null]],[13],[2,\"\\n        \"],[10,\"div\"],[15,0,[30,[36,1],[\"circle text-secondary \",[32,2,[\"grade\"]]],null]],[12],[2,\"\\n          \"],[1,[32,2,[\"grade\"]]],[13],[2,\"\\n\"]],\"parameters\":[]},{\"statements\":[[2,\"        \"],[10,\"div\"],[14,0,\"fs-6 text-secondary\"],[12],[2,\"€\\n          \"],[1,[30,[36,3],[[32,2,[\"amount\"]]],null]],[13],[2,\"\\n\"]],\"parameters\":[]}]]],[2,\"\\n    \"],[13],[2,\"\\n    \"],[10,\"div\"],[14,0,\"project-details-component-finance\"],[12],[2,\"\\n\"],[6,[37,7],[[32,3]],null,[[\"default\",\"else\"],[{\"statements\":[[2,\"        \"],[10,\"div\"],[14,0,\"toFinance fw-bold text-primary\"],[12],[1,[30,[36,2],[[32,2,[\"amount\"]],[32,2,[\"totalInvested\"]]],null]],[2,\"\\n        \"],[13],[2,\"\\n        \"],[10,\"div\"],[14,0,\"duration text-secondary\"],[12],[1,[30,[36,0],[[32,2,[\"expirationDate\"]]],null]],[13],[2,\"\\n\"]],\"parameters\":[]},{\"statements\":[[2,\"        \"],[10,\"div\"],[14,0,\"duration text-secondary\"],[12],[1,[30,[36,0],[[32,2,[\"expirationDate\"]]],null]],[13],[2,\"\\n        \"],[10,\"div\"],[15,0,[30,[36,1],[\"circle text-secondary \",[32,2,[\"grade\"]]],null]],[12],[2,\"\\n          \"],[1,[32,2,[\"grade\"]]],[13],[2,\"\\n\"]],\"parameters\":[]}]]],[2,\"    \"],[13],[2,\"\\n  \"],[13],[2,\"\\n\"],[13]],\"hasEval\":false,\"upvars\":[\"duration\",\"concat\",\"tofinance\",\"formatamount\",\"get\",\"-track-array\",\"each\",\"if\"]}",
     "meta": {
       "moduleName": "emberjs-tutorial/components/project/details.hbs"
     }
@@ -213,7 +242,7 @@
     enumerable: true,
     writable: true,
     initializer: function () {
-      return 5;
+      return 0;
     }
   }), _applyDecoratedDescriptor(_class.prototype, "addNumber", [_dec2], Object.getOwnPropertyDescriptor(_class.prototype, "addNumber"), _class.prototype)), _class));
   _exports.default = ProjectDetailsComponent;
@@ -267,24 +296,23 @@
   });
   _exports.default = void 0;
 
-  var _dec, _class, _descriptor;
-
-  function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
-
-  function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-  function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) { var desc = {}; Object.keys(descriptor).forEach(function (key) { desc[key] = descriptor[key]; }); desc.enumerable = !!desc.enumerable; desc.configurable = !!desc.configurable; if ('value' in desc || desc.initializer) { desc.writable = true; } desc = decorators.slice().reverse().reduce(function (desc, decorator) { return decorator(target, property, desc) || desc; }, desc); if (context && desc.initializer !== void 0) { desc.value = desc.initializer ? desc.initializer.call(context) : void 0; desc.initializer = undefined; } if (desc.initializer === void 0) { Object.defineProperty(target, property, desc); desc = null; } return desc; }
-
-  function _initializerWarningHelper(descriptor, context) { throw new Error('Decorating class property failed. Please ensure that ' + 'proposal-class-properties is enabled and runs after the decorators transform.'); }
-
-  let IndexController = (_dec = Ember._tracked, (_class = class IndexController extends Ember.Controller {
-    constructor() {
-      super(...arguments);
-
-      _initializerDefineProperty(this, "num", _descriptor, this);
-    }
-
-    // @tracked num;
+  // import { tracked } from "@glimmer/tracking";
+  // import { computed } from "@ember/object";
+  // import { action } from "@ember/object";
+  class IndexController extends Ember.Controller {
+    // @tracked openingDateTime = "";
+    // @action
+    // setDateTime(date) {
+    //   const now = new Date();
+    //   const newDate = new Date(date);
+    //   // date = new Date(date);
+    //   const diffInMs = Math.abs(newDate, now);
+    //   if (diffInMs / (1000 * 60 * 60 * 24 * 365)) {
+    //     return "ok";
+    //   } else {
+    //     return "ok";
+    //   }
+    // }
     get projectsOnline() {
       return this.model.filter(project => project.status === "online");
     }
@@ -294,64 +322,17 @@
     } // get formatedPurcentage(num) {
     //   return `${Math.floor(num)}${Math.round(num % 1 * 100)}`
     // }
+    // @tracked num = computed(function (number) {
+    //   console.log(number);
+    //   return `${Math.floor(number)}${Math.round((number % 1) * 100)}`;
+    // });
     // set(this, '', );
     // lastname = "lastname";
 
 
-  }, (_descriptor = _applyDecoratedDescriptor(_class.prototype, "num", [_dec], {
-    configurable: true,
-    enumerable: true,
-    writable: true,
-    initializer: function () {
-      return Ember.computed(function (number) {
-        console.log(number);
-        return `${Math.floor(number)}${Math.round(number % 1 * 100)}`;
-      });
-    }
-  })), _class));
+  }
+
   _exports.default = IndexController;
-});
-;define("emberjs-tutorial/controllers/project/details", ["exports"], function (_exports) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = void 0;
-
-  var _dec, _dec2, _class, _descriptor;
-
-  function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
-
-  function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-  function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) { var desc = {}; Object.keys(descriptor).forEach(function (key) { desc[key] = descriptor[key]; }); desc.enumerable = !!desc.enumerable; desc.configurable = !!desc.configurable; if ('value' in desc || desc.initializer) { desc.writable = true; } desc = decorators.slice().reverse().reduce(function (desc, decorator) { return decorator(target, property, desc) || desc; }, desc); if (context && desc.initializer !== void 0) { desc.value = desc.initializer ? desc.initializer.call(context) : void 0; desc.initializer = undefined; } if (desc.initializer === void 0) { Object.defineProperty(target, property, desc); desc = null; } return desc; }
-
-  function _initializerWarningHelper(descriptor, context) { throw new Error('Decorating class property failed. Please ensure that ' + 'proposal-class-properties is enabled and runs after the decorators transform.'); }
-
-  let ProjectDetailsController = (_dec = Ember._tracked, _dec2 = Ember._action, (_class = class ProjectDetailsController extends Ember.Controller {
-    constructor() {
-      super(...arguments);
-
-      _initializerDefineProperty(this, "openingDateTime", _descriptor, this);
-    }
-
-    setDateTime(date) {
-      const now = new Date();
-      const diffInMs = Math.abs(date, now);
-
-      if (diffInMs / (1000 * 60 * 60 * 24 * 365)) {
-        "ok";
-      }
-    }
-
-  }, (_descriptor = _applyDecoratedDescriptor(_class.prototype, "openingDateTime", [_dec], {
-    configurable: true,
-    enumerable: true,
-    writable: true,
-    initializer: null
-  }), _applyDecoratedDescriptor(_class.prototype, "setDateTime", [_dec2], Object.getOwnPropertyDescriptor(_class.prototype, "setDateTime"), _class.prototype)), _class));
-  _exports.default = ProjectDetailsController;
 });
 ;define("emberjs-tutorial/data-adapter", ["exports", "@ember-data/debug"], function (_exports, _debug) {
   "use strict";
@@ -406,6 +387,96 @@
 
   _exports.default = _default;
 });
+;define("emberjs-tutorial/helpers/duration", ["exports"], function (_exports) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  _exports.default = void 0;
+
+  var _default = Ember.Helper.helper(function duration(params
+  /*, hash*/
+  ) {
+    const [date] = params;
+    const days = new Date(date);
+    const now = new Date();
+    const diffTime = Math.abs(days - now);
+    const diffDays = Math.round(diffTime / (1000 * 60 * 60 * 24));
+    const diffMonths = Math.round(diffDays / 30);
+    const diffYears = Math.round(diffMonths / 12);
+    let diff, unit;
+
+    if (diffYears > 0) {
+      diff = diffYears;
+      unit = "year";
+    } else if (diffMonths > 0) {
+      diff = diffMonths;
+      unit = "month";
+    } else {
+      diff = diffDays;
+      unit = "day";
+    }
+
+    return `${diff} ${unit}${diff > 1 ? "s" : ""} ${days < now ? "ago" : ""}`;
+  });
+
+  _exports.default = _default;
+});
+;define("emberjs-tutorial/helpers/formatamount", ["exports"], function (_exports) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  _exports.default = void 0;
+
+  var _default = Ember.Helper.helper(function formatamount(params
+  /*, hash*/
+  ) {
+    let [amount] = params;
+    let formatedAmount = "";
+
+    do {
+      if (formatedAmount.length) {
+        formatedAmount = "," + formatedAmount;
+      }
+
+      let threeDigits = amount % 1000 + "";
+      amount /= 1000;
+
+      if (amount > 1) {
+        while (threeDigits.length < 3) {
+          threeDigits = "0" + threeDigits;
+        }
+      }
+
+      formatedAmount = threeDigits + formatedAmount;
+    } while (amount > 1);
+
+    return formatedAmount;
+  });
+
+  _exports.default = _default;
+});
+;define("emberjs-tutorial/helpers/formatstring", ["exports"], function (_exports) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  _exports.default = void 0;
+
+  var _default = Ember.Helper.helper(function formatstring(params
+  /*, hash*/
+  ) {
+    const [string, length] = params;
+    console.log(string, length);
+    return `${string}${length > 1 ? "s" : ""}`;
+  });
+
+  _exports.default = _default;
+});
 ;define("emberjs-tutorial/helpers/pluralize", ["exports", "ember-inflector/lib/helpers/pluralize"], function (_exports, _pluralize) {
   "use strict";
 
@@ -424,6 +495,47 @@
   });
   _exports.default = void 0;
   var _default = _singularize.default;
+  _exports.default = _default;
+});
+;define("emberjs-tutorial/helpers/tofinance", ["exports"], function (_exports) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  _exports.default = void 0;
+
+  var _default = Ember.Helper.helper(function tofinance(params
+  /*, hash*/
+  ) {
+    const [amount, totalInvested] = params;
+    let toFinance = amount - totalInvested;
+    let formatedToFinance = "";
+
+    do {
+      if (formatedToFinance.length) {
+        formatedToFinance = "," + formatedToFinance;
+      }
+
+      let threeDigits = toFinance % 1000 + "";
+      toFinance /= 1000;
+
+      if (toFinance > 1) {
+        while (threeDigits.length < 3) {
+          threeDigits = "0" + threeDigits;
+        }
+      }
+
+      formatedToFinance = threeDigits + formatedToFinance;
+    } while (toFinance > 1);
+
+    if (toFinance != "0") {
+      return `€ ${formatedToFinance} to finance >`;
+    } else {
+      return "See the project >";
+    }
+  });
+
   _exports.default = _default;
 });
 ;define("emberjs-tutorial/initializers/app-version", ["exports", "ember-cli-app-version/initializer-factory", "emberjs-tutorial/config/environment"], function (_exports, _initializerFactory, _environment) {
@@ -796,7 +908,6 @@
     async model() {
       const projects = await this.store.findAll("project"); // const response = await fetch("https://api.october.eu/projects");
       // const { projects } = await response.json();
-      // console.log(projects);
 
       return projects;
     }
@@ -900,8 +1011,8 @@
   _exports.default = void 0;
 
   var _default = Ember.HTMLBars.template({
-    "id": "3MkFN4bP",
-    "block": "{\"symbols\":[\"project\",\"project\"],\"statements\":[[8,\"general-container\",[],[[],[]],[[\"default\"],[{\"statements\":[[2,\"\\n  \"],[10,\"div\"],[14,0,\"projects-online\"],[12],[2,\"\\n    \"],[10,\"h3\"],[12],[1,[32,0,[\"projectsOnline\",\"length\"]]],[2,\" projects online\"],[13],[2,\"\\n\"],[6,[37,1],[[30,[36,0],[[30,[36,0],[[32,0,[\"projectsOnline\"]]],null]],null]],null,[[\"default\"],[{\"statements\":[[2,\"      \"],[8,\"project\",[],[[\"@project\",\"@type\"],[[32,2],\"online\"]],null],[2,\"\\n\"]],\"parameters\":[2]}]]],[2,\"  \"],[13],[2,\"\\n  \"],[10,\"div\"],[14,0,\"projects-financed\"],[12],[2,\"\\n    \"],[10,\"h3\"],[12],[2,\"Financed projects\"],[13],[2,\"\\n\"],[6,[37,1],[[30,[36,0],[[30,[36,0],[[32,0,[\"projectsCompleted\"]]],null]],null]],null,[[\"default\"],[{\"statements\":[[2,\"      \"],[8,\"project\",[],[[\"@project\",\"@type\"],[[32,1],\"financed\"]],null],[2,\"\\n\"]],\"parameters\":[1]}]]],[2,\"  \"],[13],[2,\"\\n\\n\"]],\"parameters\":[]}]]]],\"hasEval\":false,\"upvars\":[\"-track-array\",\"each\"]}",
+    "id": "hOhOc1AZ",
+    "block": "{\"symbols\":[\"project\",\"project\",\"@project\"],\"statements\":[[8,\"general-container\",[],[[],[]],[[\"default\"],[{\"statements\":[[2,\"\\n  \"],[10,\"h3\"],[12],[1,[32,0,[\"projectsOnline\",\"length\"]]],[2,\"\\n    \"],[1,[30,[36,1],[\"project\",[32,0,[\"projectsOnline\",\"length\"]]],null]],[2,\"\\n    online\"],[13],[2,\"\\n  \"],[10,\"div\"],[14,0,\"projects-online\"],[12],[2,\"\\n\"],[6,[37,3],[[30,[36,2],[[30,[36,2],[[32,0,[\"projectsOnline\"]]],null]],null]],null,[[\"default\"],[{\"statements\":[[2,\"      \"],[8,\"project\",[],[[\"@project\",\"@isOnline\",\"@openingDateTime\"],[[32,2],true,[30,[36,0],[[32,0,[\"setDateTime\"]],[32,3,[\"openingDate\"]]],null]]],null],[2,\"\\n\"]],\"parameters\":[2]}]]],[2,\"  \"],[13],[2,\"\\n  \"],[10,\"h3\"],[12],[2,\"Financed projects\"],[13],[2,\"\\n  \"],[10,\"div\"],[14,0,\"projects-financed\"],[12],[2,\"\\n\"],[6,[37,3],[[30,[36,2],[[30,[36,2],[[32,0,[\"projectsCompleted\"]]],null]],null]],null,[[\"default\"],[{\"statements\":[[2,\"      \"],[8,\"project\",[],[[\"@project\",\"@isOnline\"],[[32,1],false]],null],[2,\"\\n\"]],\"parameters\":[1]}]]],[2,\"  \"],[13],[2,\"\\n\\n\"]],\"parameters\":[]}]]]],\"hasEval\":false,\"upvars\":[\"fn\",\"formatstring\",\"-track-array\",\"each\"]}",
     "meta": {
       "moduleName": "emberjs-tutorial/templates/index.hbs"
     }
@@ -984,7 +1095,7 @@ catch(err) {
 
 ;
           if (!runningTests) {
-            require("emberjs-tutorial/app")["default"].create({"name":"emberjs-tutorial","version":"0.0.0+68cf5482"});
+            require("emberjs-tutorial/app")["default"].create({"name":"emberjs-tutorial","version":"0.0.0+10487c97"});
           }
         
 //# sourceMappingURL=emberjs-tutorial.map

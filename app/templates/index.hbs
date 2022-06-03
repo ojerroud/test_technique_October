@@ -1,14 +1,20 @@
 <GeneralContainer>
+  <h3>{{this.projectsOnline.length}}
+    {{formatstring "project" this.projectsOnline.length}}
+    online</h3>
   <div class="projects-online">
-    <h3>{{this.projectsOnline.length}} projects online</h3>
     {{#each this.projectsOnline as |project|}}
-      <Project @project={{project}} @type="online" />
+      <Project
+        @project={{project}}
+        @isOnline={{true}}
+        @openingDateTime={{fn this.setDateTime @project.openingDate}}
+      />
     {{/each}}
   </div>
+  <h3>Financed projects</h3>
   <div class="projects-financed">
-    <h3>Financed projects</h3>
     {{#each this.projectsCompleted as |project|}}
-      <Project @project={{project}} @type="financed" />
+      <Project @project={{project}} @isOnline={{false}} />
     {{/each}}
   </div>
 

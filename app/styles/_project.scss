@@ -4,10 +4,12 @@ h3 {
   margin-bottom: 2em;
 }
 
-.project {
+.project-online,
+.project-financed {
   display: flex;
   flex-direction: column;
   height: 300px;
+  width: 100%;
   border: solid 1px lightgray;
   border-radius: 5px;
   margin-bottom: 2em;
@@ -30,17 +32,14 @@ h3 {
     display: flex;
     flex-direction: column;
     align-items: center;
-    //   // // // justify-content: center;
-    //   // // // padding: 1rem;
     border-radius: 0px 0px 5px 5px;
     background-color: rgb(238, 236, 236);
     height: 40%;
 
     > .project-flag {
       position: absolute;
-
-      width: 22px;
-      height: 16px;
+      width: 11px;
+      height: 8px;
       transform: translate(0px, -2px);
     }
 
@@ -49,13 +48,10 @@ h3 {
       max-height: 100%;
       height: 100%;
       width: 100%;
-      //     // padding: 1rem 1rem 2rem 1rem;
 
       > .project-details-component-summary {
-        //     //   overflow: hidden;
         margin: 1rem;
         width: 30%;
-        //     //   height: 100%;
 
         > .project-summary {
           font-size: 0.8rem;
@@ -74,7 +70,29 @@ h3 {
         align-items: center;
         justify-content: center;
         width: 40%;
+      }
 
+      > .project-details-component-finance {
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
+        align-items: flex-end;
+        margin: 1rem;
+        width: 30%;
+
+        > .toFinance {
+          font-size: 0.8rem;
+        }
+
+        > .duration {
+          font-size: 0.8rem;
+        }
+
+        //     //   height: 100%;
+      }
+
+      > .project-details-component-rate,
+      .project-details-component-finance {
         > .circle:before {
           display: inline-block;
           position: relative;
@@ -109,11 +127,16 @@ h3 {
           border: 2px solid rgb(245, 93, 93);
         }
       }
-
-      > .project-details-component-finance {
-        width: 30%;
-        //     //   height: 100%;
-      }
     }
+  }
+}
+
+.projects-financed {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+  .project-financed {
+    width: 47%;
   }
 }

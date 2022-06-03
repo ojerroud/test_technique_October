@@ -144,6 +144,90 @@ define("emberjs-tutorial/tests/integration/components/project/image-test", ["qun
     });
   });
 });
+define("emberjs-tutorial/tests/integration/helpers/duration-test", ["qunit", "ember-qunit", "@ember/test-helpers"], function (_qunit, _emberQunit, _testHelpers) {
+  "use strict";
+
+  (0, _qunit.module)('Integration | Helper | duration', function (hooks) {
+    (0, _emberQunit.setupRenderingTest)(hooks); // TODO: Replace this with your real tests.
+
+    (0, _qunit.test)('it renders', async function (assert) {
+      this.set('inputValue', '1234');
+      await (0, _testHelpers.render)(Ember.HTMLBars.template(
+      /*
+        {{duration inputValue}}
+      */
+      {
+        "id": "l9nXQjVP",
+        "block": "{\"symbols\":[],\"statements\":[[1,[30,[36,1],[[35,0]],null]]],\"hasEval\":false,\"upvars\":[\"inputValue\",\"duration\"]}",
+        "meta": {}
+      }));
+      assert.equal(this.element.textContent.trim(), '1234');
+    });
+  });
+});
+define("emberjs-tutorial/tests/integration/helpers/formatamount-test", ["qunit", "ember-qunit", "@ember/test-helpers"], function (_qunit, _emberQunit, _testHelpers) {
+  "use strict";
+
+  (0, _qunit.module)('Integration | Helper | formatamount', function (hooks) {
+    (0, _emberQunit.setupRenderingTest)(hooks); // TODO: Replace this with your real tests.
+
+    (0, _qunit.test)('it renders', async function (assert) {
+      this.set('inputValue', '1234');
+      await (0, _testHelpers.render)(Ember.HTMLBars.template(
+      /*
+        {{formatamount inputValue}}
+      */
+      {
+        "id": "e7unuCYb",
+        "block": "{\"symbols\":[],\"statements\":[[1,[30,[36,1],[[35,0]],null]]],\"hasEval\":false,\"upvars\":[\"inputValue\",\"formatamount\"]}",
+        "meta": {}
+      }));
+      assert.equal(this.element.textContent.trim(), '1234');
+    });
+  });
+});
+define("emberjs-tutorial/tests/integration/helpers/formatstring-test", ["qunit", "ember-qunit", "@ember/test-helpers"], function (_qunit, _emberQunit, _testHelpers) {
+  "use strict";
+
+  (0, _qunit.module)('Integration | Helper | formatstring', function (hooks) {
+    (0, _emberQunit.setupRenderingTest)(hooks); // TODO: Replace this with your real tests.
+
+    (0, _qunit.test)('it renders', async function (assert) {
+      this.set('inputValue', '1234');
+      await (0, _testHelpers.render)(Ember.HTMLBars.template(
+      /*
+        {{formatstring inputValue}}
+      */
+      {
+        "id": "hvRGT0oM",
+        "block": "{\"symbols\":[],\"statements\":[[1,[30,[36,1],[[35,0]],null]]],\"hasEval\":false,\"upvars\":[\"inputValue\",\"formatstring\"]}",
+        "meta": {}
+      }));
+      assert.equal(this.element.textContent.trim(), '1234');
+    });
+  });
+});
+define("emberjs-tutorial/tests/integration/helpers/tofinance-test", ["qunit", "ember-qunit", "@ember/test-helpers"], function (_qunit, _emberQunit, _testHelpers) {
+  "use strict";
+
+  (0, _qunit.module)('Integration | Helper | tofinance', function (hooks) {
+    (0, _emberQunit.setupRenderingTest)(hooks); // TODO: Replace this with your real tests.
+
+    (0, _qunit.test)('it renders', async function (assert) {
+      this.set('inputValue', '1234');
+      await (0, _testHelpers.render)(Ember.HTMLBars.template(
+      /*
+        {{tofinance inputValue}}
+      */
+      {
+        "id": "uuHdx0zH",
+        "block": "{\"symbols\":[],\"statements\":[[1,[30,[36,1],[[35,0]],null]]],\"hasEval\":false,\"upvars\":[\"inputValue\",\"tofinance\"]}",
+        "meta": {}
+      }));
+      assert.equal(this.element.textContent.trim(), '1234');
+    });
+  });
+});
 define("emberjs-tutorial/tests/test-helper", ["emberjs-tutorial/app", "emberjs-tutorial/config/environment", "@ember/test-helpers", "ember-qunit"], function (_app, _environment, _testHelpers, _emberQunit) {
   "use strict";
 
@@ -159,18 +243,6 @@ define("emberjs-tutorial/tests/unit/adapters/application-test", ["qunit", "ember
     (0, _qunit.test)('it exists', function (assert) {
       let adapter = this.owner.lookup('adapter:application');
       assert.ok(adapter);
-    });
-  });
-});
-define("emberjs-tutorial/tests/unit/controllers/details-test", ["qunit", "ember-qunit"], function (_qunit, _emberQunit) {
-  "use strict";
-
-  (0, _qunit.module)('Unit | Controller | details', function (hooks) {
-    (0, _emberQunit.setupTest)(hooks); // TODO: Replace this with your real tests.
-
-    (0, _qunit.test)('it exists', function (assert) {
-      let controller = this.owner.lookup('controller:details');
-      assert.ok(controller);
     });
   });
 });
@@ -194,18 +266,6 @@ define("emberjs-tutorial/tests/unit/controllers/project-test", ["qunit", "ember-
 
     (0, _qunit.test)('it exists', function (assert) {
       let controller = this.owner.lookup('controller:project');
-      assert.ok(controller);
-    });
-  });
-});
-define("emberjs-tutorial/tests/unit/controllers/project/details-test", ["qunit", "ember-qunit"], function (_qunit, _emberQunit) {
-  "use strict";
-
-  (0, _qunit.module)('Unit | Controller | project/details', function (hooks) {
-    (0, _emberQunit.setupTest)(hooks); // TODO: Replace this with your real tests.
-
-    (0, _qunit.test)('it exists', function (assert) {
-      let controller = this.owner.lookup('controller:project/details');
       assert.ok(controller);
     });
   });

@@ -10,8 +10,6 @@ export default class IndexRoute extends Route {
     // const response = await fetch("https://api.october.eu/projects");
     // const { projects } = await response.json();
 
-    // console.log(projects);
-
     return projects;
   }
 }
