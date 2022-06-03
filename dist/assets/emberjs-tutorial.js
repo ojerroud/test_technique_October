@@ -1095,7 +1095,7 @@ catch(err) {
 
 ;
           if (!runningTests) {
-            require("emberjs-tutorial/app")["default"].create({"name":"emberjs-tutorial","version":"0.0.0+10487c97"});
+            require("emberjs-tutorial/app")["default"].create({"name":"emberjs-tutorial","version":"0.0.0+30e4f968"});
           }
         
 //# sourceMappingURL=emberjs-tutorial.map

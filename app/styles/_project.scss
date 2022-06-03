@@ -134,9 +134,10 @@ h3 {
 .projects-financed {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: center;
 
   .project-financed {
+    margin: 1rem;
     width: 47%;
   }
 }
